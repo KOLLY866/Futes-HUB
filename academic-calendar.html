@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Calendar | FutesHub</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cal-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .session-tabs, .cal-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .session-tab, .cal-filter {
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .session-tab:hover, .cal-filter:hover { border-color: #2563eb; color: #2563eb; }
+        .session-tab.active, .cal-filter.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+        .session-tab.active { background: #1e3a8a; border-color: #1e3a8a; }
+        .cal-source {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .cal-source a { color: #2563eb; }
+        .cal-list { display: flex; flex-direction: column; gap: 12px; }
+        .cal-item {
+            display: flex;
+            gap: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 18px;
+            transition: 0.2s;
+        }
+        .cal-item:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+        .cal-item.past { opacity: 0.65; }
+        .cal-item.upcoming { border-color: #bfdbfe; background: #eff6ff; }
+        .cal-date-box {
+            min-width: 64px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            padding: 10px 8px;
+            border: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+        .cal-date-box .month {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #2563eb;
+            letter-spacing: 0.04em;
+        }
+        .cal-date-box .day { font-size: 24px; font-weight: 700; color: #0f172a; line-height: 1.1; }
+        .cal-date-box .year { font-size: 11px; color: #94a3b8; }
+        .cal-body { flex: 1; min-width: 0; }
+        .cal-body h3 { font-size: 16px; color: #0f172a; margin-bottom: 4px; }
+        .cal-meta { font-size: 12px; color: #64748b; margin-bottom: 6px; }
+        .cal-body p { font-size: 13px; color: #475569; line-height: 1.5; }
+        .cal-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-right: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .tag-registration { background: #dbeafe; color: #1d4ed8; }
+        .tag-exam { background: #fee2e2; color: #b91c1c; }
+        .tag-holiday { background: #dcfce7; color: #15803d; }
+        .tag-event { background: #fce7f3; color: #be185d; }
+        .tag-deadline { background: #fef3c7; color: #b45309; }
+        .tag-lecture { background: #e0e7ff; color: #3730a3; }
+        .cal-status { font-size: 11px; font-weight: 600; margin-left: 6px; color: #059669; }
+        .cal-status.past-label { color: #94a3b8; }
+        .semester-heading {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin: 20px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #dbeafe;
+        }
+        .semester-heading:first-child { margin-top: 0; }
+        @media (max-width: 600px) {
+            .cal-item { flex-direction: column; }
+            .cal-date-box { width: 100%; display: flex; justify-content: center; gap: 10px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration:none;">Futes<span>Hub</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="news.html">Campus News</a>
+            <a href="academic-calendar.html" class="active">Academic Calendar</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="cgpa.html">CGPA</a>
+        </div>
+        <a href="dashboard.html" class="login-btn" style="text-decoration:none;">Dashboard</a>
+    </nav>
+
+    <header class="site-header">
+        <a href="index.html" class="back-home">← Back to FutesHub</a>
+        <h1>
+            <img src="icons/calendar.svg" alt="" class="header-icon">
+            Academic Calendar
+        </h1>
+        <p>Official FUTES-IYIN dates · Source: futes.edu.ng</p>
+    </header>
+
+    <div class="container" style="max-width:900px;">
+        <div class="cal-toolbar">
+            <div class="session-tabs">
+                <button class="session-tab active" onclick="setSession('2026-2027', this)">2026/2027 (Current)</button>
+                <button class="session-tab" onclick="setSession('2025-2026', this)">2025/2026 (Previous)</button>
+            </div>
+        </div>
+
+        <div class="cal-toolbar">
+            <div class="cal-filters">
+                <button class="cal-filter active" onclick="filterCal('all', this)">All</button>
+                <button class="cal-filter" onclick="filterCal('Registration', this)">Registration</button>
+                <button class="cal-filter" onclick="filterCal('Lecture', this)">Lectures</button>
+                <button class="cal-filter" onclick="filterCal('Exam', this)">Exams</button>
+                <button class="cal-filter" onclick="filterCal('Holiday', this)">Breaks</button>
+                <button class="cal-filter" onclick="filterCal('Event', this)">Events</button>
+            </div>
+        </div>
+
+        <p id="calSource" class="cal-source"></p>
+        <p id="calCount" style="margin-bottom:14px;color:#555;font-weight:500;"></p>
+        <div id="calList" class="cal-list"></div>
+
+        <p style="margin-top:24px;font-size:12px;color:#94a3b8;text-align:center;">
+            Dates from official FUTES-IYIN proposed calendars. Always confirm with the latest notice on
+            <a href="https://futes.edu.ng/news" target="_blank" rel="noopener" style="color:#2563eb;">futes.edu.ng</a>.
+        </p>
+    </div>
+
+    <footer>
+        <h3>FutesHub</h3>
+        <p>Your Campus. Your Community. One Platform for FUTES-IYIN.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="news.html">Campus News</a>
+            <a href="academic-calendar.html">Academic Calendar</a>
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+        <p class="copyright">© 2026 FutesHub · FUTES-IYIN. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Official data from futes.edu.ng
+        // 2025/2026: https://futes.edu.ng/news/proposed-academic-calendar-for-the-20252026-academic-session
+        // 2026/2027: https://futes.edu.ng/news/proposed-academic-calendar-for-the-2026-2027-academic-session-for-returning-students
+        // Note: First exams for 2025/26 were adjusted to start 13 Apr 2026 (official circular)
+
+        const calendars = {
+            "2025-2026": {
+                label: "2025/2026 Academic Session (Maiden / Previous)",
+                source: "https://futes.edu.ng/news/proposed-academic-calendar-for-the-20252026-academic-session",
+                sourceNote: "Proposed calendar published 28 Dec 2025. First Semester exams later adjusted to start 13 April 2026.",
+                events: [
+                    // First Semester
+                    { title: "Resumption / Registration begins", category: "Registration", date: "2026-01-05", endDate: null, semester: "First Semester", description: "Students resume; registration begins." },
+                    { title: "Student Registration continues", category: "Registration", date: "2026-01-06", endDate: "2026-01-09", semester: "First Semester", description: "Registration continues for students." },
+                    { title: "Commencement Prayer / Registration Continues", category: "Event", date: "2026-01-12", endDate: null, semester: "First Semester", description: "Commencement prayer; registration continues." },
+                    { title: "Lectures begin", category: "Lecture", date: "2026-01-13", endDate: null, semester: "First Semester", description: "First Semester lectures commence." },
+                    { title: "Orientation Programme for Students", category: "Event", date: "2026-01-14", endDate: "2026-01-16", semester: "First Semester", description: "Orientation for students." },
+                    { title: "Matriculation Ceremony", category: "Event", date: "2026-02-02", endDate: null, semester: "First Semester", description: "Matriculation ceremony." },
+                    { title: "Lectures continue with Continuous Assessment", category: "Lecture", date: "2026-02-03", endDate: "2026-03-13", semester: "First Semester", description: "Lectures and continuous assessment tests." },
+                    { title: "Revision week", category: "Lecture", date: "2026-03-13", endDate: "2026-03-18", semester: "First Semester", description: "Revision week (as on proposed calendar)." },
+                    { title: "Lectures end", category: "Lecture", date: "2026-04-10", endDate: null, semester: "First Semester", description: "End of lectures (proposed). Later adjusted; exams brought forward." },
+                    { title: "First Semester Examinations begin", category: "Exam", date: "2026-04-13", endDate: null, semester: "First Semester", description: "Exams commenced 13 April 2026 (adjusted from proposed 20 April)." },
+                    { title: "First Semester Examinations end", category: "Exam", date: "2026-04-24", endDate: null, semester: "First Semester", description: "First Semester examinations concluded (reported)." },
+                    { title: "Marking of scripts / results submission", category: "Deadline", date: "2026-05-04", endDate: "2026-05-22", semester: "First Semester", description: "Marking and results submission (proposed window)." },
+                    // Second Semester
+                    { title: "Resumption / Registration begins", category: "Registration", date: "2026-05-11", endDate: null, semester: "Second Semester", description: "Second Semester resumption and registration." },
+                    { title: "Lectures begin", category: "Lecture", date: "2026-05-12", endDate: null, semester: "Second Semester", description: "Second Semester lectures begin." },
+                    { title: "Lectures continue / Continuous Assessment", category: "Lecture", date: "2026-06-22", endDate: "2026-06-26", semester: "Second Semester", description: "Lectures and CA tests continue." },
+                    { title: "Lectures end", category: "Lecture", date: "2026-07-17", endDate: null, semester: "Second Semester", description: "End of Second Semester lectures." },
+                    { title: "Revision week", category: "Lecture", date: "2026-07-20", endDate: "2026-07-24", semester: "Second Semester", description: "Revision week." },
+                    { title: "Second Semester Examinations begin", category: "Exam", date: "2026-07-27", endDate: null, semester: "Second Semester", description: "Second Semester examinations begin." },
+                    { title: "Second Semester Examinations end", category: "Exam", date: "2026-08-07", endDate: null, semester: "Second Semester", description: "Second Semester examinations end." },
+                    { title: "Marking of scripts / results submission", category: "Deadline", date: "2026-08-10", endDate: "2026-08-31", semester: "Second Semester", description: "Marking and results submission. Session completed August 2026." }
+                ]
+            },
+            "2026-2027": {
+                label: "2026/2027 Academic Session (Current) — Returning Students",
+                source: "https://futes.edu.ng/news/proposed-academic-calendar-for-the-2026-2027-academic-session-for-returning-students",
+                sourceNote: "Proposed calendar for returning students, published 29 Sep 2026. Fresh students resume 2 Nov 2026 (separate schedule).",
+                events: [
+                    // First Semester – Returning
+                    { title: "Resumption of Returning Students", category: "Registration", date: "2026-10-12", endDate: null, semester: "First Semester", description: "Returning students (200 Level) resume." },
+                    { title: "Registration weeks for Returning Students", category: "Registration", date: "2026-10-12", endDate: "2026-10-23", semester: "First Semester", description: "Registration period for returning students." },
+                    { title: "Lectures begin", category: "Lecture", date: "2026-10-19", endDate: null, semester: "First Semester", description: "First Semester lectures begin for returning students." },
+                    { title: "Late Registration with Penalty", category: "Registration", date: "2026-10-26", endDate: "2026-10-30", semester: "First Semester", description: "Late registration window (penalty applies)." },
+                    { title: "Fresh Students Resumption", category: "Registration", date: "2026-11-02", endDate: null, semester: "First Semester", description: "Fresh (100 Level) students resume (separate calendar)." },
+                    { title: "End of the year break", category: "Holiday", date: "2026-12-22", endDate: null, semester: "First Semester", description: "End-of-year break begins." },
+                    { title: "Resumption from End of the year break", category: "Event", date: "2027-01-04", endDate: null, semester: "First Semester", description: "Academic activities resume after break." },
+                    { title: "Lectures end for returning students", category: "Lecture", date: "2027-01-29", endDate: null, semester: "First Semester", description: "End of First Semester lectures (returning students)." },
+                    { title: "Revision week for Returning Students", category: "Lecture", date: "2027-02-01", endDate: "2027-02-05", semester: "First Semester", description: "Revision week." },
+                    { title: "First Semester Examinations begin", category: "Exam", date: "2027-02-08", endDate: null, semester: "First Semester", description: "First Semester examinations begin for returning students." },
+                    { title: "First Semester Examinations end", category: "Exam", date: "2027-02-19", endDate: null, semester: "First Semester", description: "First Semester examinations end." },
+                    { title: "Marking of scripts / result processing", category: "Deadline", date: "2027-02-22", endDate: "2027-04-02", semester: "First Semester", description: "Marking and result processing." },
+                    // Second Semester
+                    { title: "Resumption / Registration of Second Semester", category: "Registration", date: "2027-03-15", endDate: null, semester: "Second Semester", description: "Second Semester resumption and registration." },
+                    { title: "Lectures begin", category: "Lecture", date: "2027-03-15", endDate: null, semester: "Second Semester", description: "Second Semester lectures begin." },
+                    { title: "Late Registrations", category: "Registration", date: "2027-03-22", endDate: "2027-03-26", semester: "Second Semester", description: "Late registration window." },
+                    { title: "Lectures end", category: "Lecture", date: "2027-06-11", endDate: null, semester: "Second Semester", description: "End of Second Semester lectures." },
+                    { title: "Revision Week", category: "Lecture", date: "2027-06-14", endDate: "2027-06-18", semester: "Second Semester", description: "Revision week." },
+                    { title: "Second Semester Examinations", category: "Exam", date: "2027-06-21", endDate: "2027-07-03", semester: "Second Semester", description: "Second Semester examinations." },
+                    { title: "Marking of scripts / results processing", category: "Deadline", date: "2027-07-05", endDate: "2027-08-13", semester: "Second Semester", description: "Marking and results processing." }
+                ]
+            }
+        };
+
+        const tagClass = {
+            Registration: "tag-registration",
+            Exam: "tag-exam",
+            Holiday: "tag-holiday",
+            Event: "tag-event",
+            Deadline: "tag-deadline",
+            Lecture: "tag-lecture"
+        };
+
+        let currentSession = "2026-2027";
+        let currentFilter = "all";
+
+        function parseDate(s) {
+            return new Date(s + "T12:00:00");
+        }
+
+        function formatRange(start, end) {
+            const opts = { day: "numeric", month: "short", year: "numeric" };
+            const a = parseDate(start);
+            if (!end) return a.toLocaleDateString("en-GB", opts);
+            return a.toLocaleDateString("en-GB", opts) + " – " + parseDate(end).toLocaleDateString("en-GB", opts);
+        }
+
+        function isPast(ev) {
+            const end = ev.endDate ? parseDate(ev.endDate) : parseDate(ev.date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return end < today;
+        }
+
+        function isUpcoming(ev) {
+            if (isPast(ev)) return false;
+            const start = parseDate(ev.date);
+            const in45 = new Date();
+            in45.setDate(in45.getDate() + 45);
+            return start <= in45;
+        }
+
+        function setSession(key, btn) {
+            currentSession = key;
+            document.querySelectorAll(".session-tab").forEach(function (b) { b.classList.remove("active"); });
+            if (btn) btn.classList.add("active");
+            renderCal();
+        }
+
+        function filterCal(cat, btn) {
+            currentFilter = cat;
+            document.querySelectorAll(".cal-filter").forEach(function (b) { b.classList.remove("active"); });
+            if (btn) btn.classList.add("active");
+            renderCal();
+        }
+
+        function renderCal() {
+            const data = calendars[currentSession];
+            let items = data.events.slice();
+
+            if (currentFilter !== "all") {
+                items = items.filter(function (e) { return e.category === currentFilter; });
+            }
+
+            document.getElementById("calSource").innerHTML =
+                "<strong>" + data.label + "</strong><br>" + data.sourceNote +
+                ' · <a href="' + data.source + '" target="_blank" rel="noopener">Official source</a>';
+
+            const list = document.getElementById("calList");
+            const count = document.getElementById("calCount");
+
+            if (items.length === 0) {
+                list.innerHTML = '<div class="no-results"><h3>No dates in this category</h3></div>';
+                count.textContent = "No events found";
+                return;
+            }
+
+            count.textContent = "Showing " + items.length + " date" + (items.length > 1 ? "s" : "");
+
+            let html = "";
+            let lastSem = "";
+            items.forEach(function (ev) {
+                if (ev.semester !== lastSem) {
+                    lastSem = ev.semester;
+                    html += '<div class="semester-heading">' + lastSem + "</div>";
+                }
+                const d = parseDate(ev.date);
+                const month = d.toLocaleDateString("en-GB", { month: "short" });
+                const day = d.getDate();
+                const year = d.getFullYear();
+                const past = isPast(ev);
+                const upcoming = isUpcoming(ev);
+                const cls = past ? "past" : (upcoming ? "upcoming" : "");
+                const status = past
+                    ? '<span class="cal-status past-label">Past</span>'
+                    : (upcoming ? '<span class="cal-status">Upcoming</span>' : "");
+
+                html +=
+                    '<div class="cal-item ' + cls + '">' +
+                        '<div class="cal-date-box">' +
+                            '<div class="month">' + month + "</div>" +
+                            '<div class="day">' + day + "</div>" +
+                            '<div class="year">' + year + "</div>" +
+                        "</div>" +
+                        '<div class="cal-body">' +
+                            '<div class="cal-meta">' +
+                                '<span class="cal-tag ' + (tagClass[ev.category] || "") + '">' + ev.category + "</span>" +
+                                status +
+                            "</div>" +
+                            "<h3>" + ev.title + "</h3>" +
+                            '<div class="cal-meta">' + formatRange(ev.date, ev.endDate) + "</div>" +
+                            "<p>" + ev.description + "</p>" +
+                        "</div>" +
+                    "</div>";
+            });
+            list.innerHTML = html;
+        }
+
+        renderCal();
+    </script>
+</body>
+</html>

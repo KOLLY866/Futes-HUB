@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Past Question | FutesHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration:none;">
+            Futes<span>Hub</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="cgpa.html">CGPA Calculator</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="programmes.html">Programmes</a>
+            <a href="upload.html" class="active">Upload</a>
+        </div>
+        <a href="dashboard.html" class="login-btn" style="text-decoration:none;">Dashboard</a>
+    </nav>
+
+    <header class="site-header">
+        <a href="past-questions.html" class="back-home">← Back to Past Questions</a>
+        <h1>
+            <img src="icons/book.svg" alt="" class="header-icon">
+            Upload Past Question
+        </h1>
+        <p>Submit a past question for review · It will appear after admin approval</p>
+    </header>
+
+    <div class="container">
+        <div class="upload-notice">
+            <strong>How it works:</strong>
+            Fill in the details and attach the file (PDF or image). Your submission goes to
+            <em>pending</em> status. An admin must approve it before it is published on the Past Questions page.
+        </div>
+
+        <form id="uploadForm" onsubmit="submitQuestion(event)">
+            <div class="student-info">
+                <input type="text" id="upCourseCode" placeholder="Course Code (e.g. CSC101)" required>
+                <input type="text" id="upCourseTitle" placeholder="Course Title" required>
+
+                <select id="upDepartment" required>
+                    <option value="">Select Programme</option>
+                    <optgroup label="Faculty of Natural and Applied Sciences">
+                        <option value="Biochemistry">Biochemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Forensic Science">Forensic Science</option>
+                        <option value="Geology">Geology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Statistics">Statistics</option>
+                        <option value="Animal and Environmental Biology">Animal and Environmental Biology</option>
+                        <option value="Biotechnology">Biotechnology</option>
+                        <option value="Science Laboratory Technology">Science Laboratory Technology</option>
+                        <option value="Environmental Management and Toxicology">Environmental Management and Toxicology</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Engineering and Technology">
+                        <option value="Agricultural and Biosystems Engineering">Agricultural and Biosystems Engineering</option>
+                        <option value="Biomedical Engineering">Biomedical Engineering</option>
+                        <option value="Mining Engineering">Mining Engineering</option>
+                        <option value="Civil and Environmental Engineering">Civil and Environmental Engineering</option>
+                        <option value="Computer Engineering">Computer Engineering</option>
+                        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Environmental Sciences">
+                        <option value="Architecture">Architecture</option>
+                        <option value="Building Technology">Building Technology</option>
+                        <option value="Estate Management">Estate Management</option>
+                        <option value="Environmental Science and Management">Environmental Science and Management</option>
+                        <option value="Industrial Design">Industrial Design</option>
+                        <option value="Quantity Surveying">Quantity Surveying</option>
+                        <option value="Surveying and Geoinformatics">Surveying and Geoinformatics</option>
+                        <option value="Urban and Regional Planning">Urban and Regional Planning</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Computing and Information Technology">
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Cyber Security">Cyber Security</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Information and Communication Technology">Information and Communication Technology</option>
+                    </optgroup>
+                </select>
+
+                <select id="upLevel" required>
+                    <option value="">Select Level</option>
+                    <option value="100">100 Level</option>
+                    <option value="200">200 Level</option>
+                    <option value="300">300 Level</option>
+                    <option value="400">400 Level</option>
+                    <option value="500">500 Level</option>
+                </select>
+
+                <select id="upSession" required>
+                    <option value="">Select Session</option>
+                    <option value="2024/2025">2024/2025</option>
+                    <option value="2025/2026">2025/2026</option>
+                    <option value="2026/2027">2026/2027</option>
+                </select>
+
+                <select id="upSemester" required>
+                    <option value="">Select Semester</option>
+                    <option value="First Semester">First Semester</option>
+                    <option value="Second Semester">Second Semester</option>
+                </select>
+
+                <input type="text" id="upSubmitter" placeholder="Your Name (optional)">
+                <input type="text" id="upMatric" placeholder="Matric Number (optional)">
+            </div>
+
+            <div class="file-upload-area">
+                <label for="upFile" class="file-label">
+                    <img src="icons/book.svg" alt="" class="meta-icon" style="width:28px;height:28px;">
+                    <span id="fileLabelText">Click to choose PDF or image (max ~1.5 MB)</span>
+                </label>
+                <input type="file" id="upFile" accept=".pdf,image/*" onchange="onFileSelected(this)">
+                <p class="file-hint">Optional: if the file is large, paste a public link below instead.</p>
+                <input type="url" id="upFileLink" placeholder="Or paste a Google Drive / file link (optional)">
+            </div>
+
+            <div class="button-container" style="margin-top:20px;">
+                <button type="submit" class="calculate">Submit for Approval</button>
+                <a href="past-questions.html" class="reset" style="text-align:center;text-decoration:none;display:block;line-height:1.2;padding:14px;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+        <div id="uploadSuccess" class="upload-success" style="display:none;">
+            <h3>✓ Submitted successfully</h3>
+            <p>Your past question is now <strong>pending approval</strong>. It will appear on the Past Questions page after an admin reviews it.</p>
+            <a href="past-questions.html" class="calculate" style="display:inline-block;width:auto;padding:12px 24px;text-decoration:none;margin-top:12px;">
+                Back to Past Questions
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <h3>FutesHub</h3>
+        <p>Your Campus. Your Community. One Platform for FUTES-IYIN.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="cgpa.html">CGPA Calculator</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="programmes.html">Programmes</a>
+            <a href="upload.html">Upload</a>
+        </div>
+        <p class="copyright">© 2026 FutesHub · FUTES-IYIN. All rights reserved.</p>
+    </footer>
+
+    <script src="upload.js"></script>
+</body>
+</html>

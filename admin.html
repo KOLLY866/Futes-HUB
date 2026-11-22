@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin · Past Questions | FutesHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration:none;">
+            Futes<span>Hub</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="admin.html" class="active">Admin</a>
+        </div>
+        <button class="login-btn" id="logoutBtn" style="display:none;" onclick="adminLogout()">Logout</button>
+    </nav>
+
+    <!-- Login gate -->
+    <div class="container" id="adminLogin" style="max-width:400px;margin-top:60px;">
+        <h1 style="text-align:center;">Admin Login</h1>
+        <p style="text-align:center;color:#666;margin-bottom:20px;">
+            Approve or reject student past-question submissions.
+        </p>
+        <label style="font-size:13px;color:#64748b;">Admin PIN</label>
+        <input type="password" id="adminPin" placeholder="Enter admin PIN" style="width:100%;padding:12px;margin:8px 0 16px;border:1px solid #e2e8f0;border-radius:8px;font-size:15px;">
+        <button class="calculate" onclick="adminLogin()">Login</button>
+        <p style="font-size:12px;color:#94a3b8;margin-top:14px;text-align:center;">
+            Default PIN: <strong>futesadmin</strong> (change it after first login)
+        </p>
+    </div>
+
+    <!-- Admin panel -->
+    <div id="adminPanel" style="display:none;">
+        <header class="site-header">
+            <h1>Past Questions Admin</h1>
+            <p>Review pending uploads · Approve to publish · Reject to discard</p>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p class="stat-label">Pending</p>
+                        <h2 id="countPending">0</h2>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p class="stat-label">Approved (user uploads)</p>
+                        <h2 id="countApproved">0</h2>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p class="stat-label">Rejected</p>
+                        <h2 id="countRejected">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-card" style="margin-bottom:20px;">
+                <h3>Change Admin PIN</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <input type="password" id="newPin" placeholder="New PIN" style="flex:1;min-width:140px;padding:10px;border:1px solid #e2e8f0;border-radius:8px;">
+                    <button class="calculate" style="width:auto;padding:10px 20px;" onclick="changePin()">Update PIN</button>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <h3>Pending Submissions</h3>
+                <div id="pendingList">
+                    <p style="color:#64748b;font-size:14px;">No pending submissions.</p>
+                </div>
+            </div>
+
+            <div class="dash-card" style="margin-top:18px;">
+                <h3>Recently Approved (user uploads)</h3>
+                <div id="approvedList">
+                    <p style="color:#64748b;font-size:14px;">None yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview modal -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal" style="max-width:640px;">
+            <h2>Submission Details</h2>
+            <div id="previewBody"></div>
+            <div class="modal-actions">
+                <button type="button" class="reset" onclick="closePreview()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h3>FutesHub</h3>
+        <p class="copyright">© 2026 FutesHub · Admin Panel</p>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>

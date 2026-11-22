@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Questions | FutesHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration:none;">
+            Futes<span>Hub</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="cgpa.html">CGPA Calculator</a>
+            <a href="past-questions.html" class="active">Past Questions</a>
+            <a href="programmes.html">Programmes</a>
+            <a href="upload.html">Upload</a>
+        </div>
+        <a href="dashboard.html" class="login-btn" style="text-decoration:none;">Dashboard</a>
+    </nav>
+
+    <header class="site-header">
+        <a href="index.html" class="back-home">← Back to FutesHub</a>
+        <h1>
+            <img src="icons/book.svg" alt="" class="header-icon">
+            Past Questions
+        </h1>
+        <p>Find past questions organized by department, course and level · FUTES-IYIN</p>
+    </header>
+
+    <div class="container">
+        <h1>Browse Past Questions</h1>
+        <p>Filter by faculty, level or search by course code</p>
+
+        <div class="student-info" style="margin-bottom: 30px;">
+            <select id="department">
+                <option value="">All Faculties / Programmes</option>
+                <optgroup label="Faculty of Natural and Applied Sciences">
+                    <option value="Biochemistry">Biochemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Forensic Science">Forensic Science</option>
+                    <option value="Geology">Geology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Microbiology">Microbiology</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Statistics">Statistics</option>
+                    <option value="Animal and Environmental Biology">Animal and Environmental Biology</option>
+                    <option value="Biotechnology">Biotechnology</option>
+                    <option value="Science Laboratory Technology">Science Laboratory Technology</option>
+                    <option value="Environmental Management and Toxicology">Environmental Management and Toxicology</option>
+                </optgroup>
+                <optgroup label="Faculty of Engineering and Technology">
+                    <option value="Agricultural and Biosystems Engineering">Agricultural and Biosystems Engineering</option>
+                    <option value="Biomedical Engineering">Biomedical Engineering</option>
+                    <option value="Mining Engineering">Mining Engineering</option>
+                    <option value="Civil and Environmental Engineering">Civil and Environmental Engineering</option>
+                    <option value="Computer Engineering">Computer Engineering</option>
+                    <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+                </optgroup>
+                <optgroup label="Faculty of Environmental Sciences">
+                    <option value="Architecture">Architecture</option>
+                    <option value="Building Technology">Building Technology</option>
+                    <option value="Estate Management">Estate Management</option>
+                    <option value="Environmental Science and Management">Environmental Science and Management</option>
+                    <option value="Industrial Design">Industrial Design</option>
+                    <option value="Quantity Surveying">Quantity Surveying</option>
+                    <option value="Surveying and Geoinformatics">Surveying and Geoinformatics</option>
+                    <option value="Urban and Regional Planning">Urban and Regional Planning</option>
+                </optgroup>
+                <optgroup label="Faculty of Computing and Information Technology">
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Information and Communication Technology">Information and Communication Technology</option>
+                </optgroup>
+
+            </select>
+            <select id="level">
+                <option value="">All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+                <option value="500">500 Level</option>
+            </select>
+            <input type="text" id="searchCourse" placeholder="Search by Course Code (e.g. CSC101)">
+            <select id="sessionFilter">
+                <option value="">All Sessions</option>
+                <option value="2025/2026">2025/2026</option>
+                <option value="2026/2027">2026/2027</option>
+            </select>
+        </div>
+
+        <div class="button-container" style="margin-bottom: 25px;">
+            <a href="upload.html" class="calculate" style="text-decoration:none;text-align:center;display:block;margin-bottom:10px;background:#059669;">
+                + Upload a Past Question
+            </a>
+
+            <button class="calculate" onclick="filterQuestions()">Search Past Questions</button>
+            <button class="reset" onclick="resetFilters()">Reset Filters</button>
+        </div>
+
+        <p id="resultCount" style="margin-bottom: 15px; color: #555; font-weight: 500;">
+            Showing all past questions
+        </p>
+
+        <div id="questionsList" class="questions-grid"></div>
+    </div>
+
+    <footer>
+        <h3>FutesHub</h3>
+        <p>Your Campus. Your Community. One Platform for FUTES-IYIN.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="cgpa.html">CGPA Calculator</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="programmes.html">Programmes</a>
+            <a href="upload.html">Upload</a>
+        </div>
+        <p class="copyright">© 2026 FutesHub · FUTES-IYIN. All rights reserved.</p>
+    </footer>
+
+    <script src="past-questions.js"></script>
+</body>
+</html>

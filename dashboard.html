@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | FutesHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration:none;">
+            Futes<span>Hub</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="cgpa.html">CGPA Calculator</a>
+            <a href="past-questions.html">Past Questions</a>
+            <a href="programmes.html">Programmes</a>
+            <a href="upload.html">Upload</a>
+        </div>
+
+        <div class="nav-user">
+            <span id="navUserName">Student</span>
+            <button class="login-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="dashboard-welcome">
+            <h1>Welcome back, <span id="dashName">Student</span> 👋</h1>
+            <p id="dashMatric">Matric: — · FUTES-IYIN</p>
+        </div>
+        <div class="dashboard-session">
+            <span class="badge">2025/2026</span>
+            <span class="badge badge-outline">First Semester</span>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="icons/calculator.svg" alt="" class="icon">
+                </div>
+                <div class="stat-info">
+                    <p class="stat-label">Current CGPA</p>
+                    <h2 id="statCGPA">0.00</h2>
+                    <p class="stat-sub" id="statClass">—</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="icons/trophy.svg" alt="" class="icon">
+                </div>
+                <div class="stat-info">
+                    <p class="stat-label">Last GPA</p>
+                    <h2 id="statGPA">0.00</h2>
+                    <p class="stat-sub">This semester</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="icons/book.svg" alt="" class="icon">
+                </div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Units</p>
+                    <h2 id="statUnits">0</h2>
+                    <p class="stat-sub">Registered</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="icons/graduation-cap.svg" alt="" class="icon">
+                </div>
+                <div class="stat-info">
+                    <p class="stat-label">Level</p>
+                    <h2 id="statLevel">100</h2>
+                    <p class="stat-sub">Undergraduate</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="dashboard-grid">
+
+            <!-- Quick Actions -->
+            <section class="dash-card">
+                <h3>Quick Actions</h3>
+                <div class="quick-actions">
+                    <a href="cgpa.html" class="action-btn">
+                        <img src="icons/calculator.svg" alt="" class="meta-icon">
+                        Calculate GPA / CGPA
+                    </a>
+                    <a href="past-questions.html" class="action-btn">
+                        <img src="icons/book.svg" alt="" class="meta-icon">
+                        Browse Past Questions
+                    </a>
+                    <button class="action-btn" onclick="openProfileEdit()">
+                        <img src="icons/search.svg" alt="" class="meta-icon">
+                        Edit Profile
+                    </button>
+                    <a href="index.html#features" class="action-btn">
+                        <img src="icons/party-popper.svg" alt="" class="meta-icon">
+                        Explore Campus Tools
+                    </a>
+                </div>
+            </section>
+
+            <!-- Profile Card -->
+            <section class="dash-card">
+                <h3>My Profile</h3>
+                <div class="profile-card">
+                    <div class="avatar" id="avatarInitials">ST</div>
+                    <div class="profile-details">
+                        <p><strong>Name:</strong> <span id="profileName">Student</span></p>
+                        <p><strong>Matric:</strong> <span id="profileMatric">—</span></p>
+                        <p><strong>Department:</strong> <span id="profileDept">—</span></p>
+                        <p><strong>Level:</strong> <span id="profileLevel">100 Level</span></p>
+                        <p><strong>Email:</strong> <span id="profileEmail">—</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Academic Progress -->
+            <section class="dash-card">
+                <h3>Academic Progress</h3>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>CGPA Progress to First Class (4.50)</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item" style="margin-top:18px;">
+                    <div class="progress-label">
+                        <span>Units Completed</span>
+                        <span id="unitsProgress">0 / 160</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-fill-alt" id="unitsFill" style="width:0%"></div>
+                    </div>
+                </div>
+                <p class="progress-note" id="progressNote">
+                    Add courses in the CGPA Calculator to update your progress.
+                </p>
+            </section>
+
+            <!-- Announcements -->
+            <section class="dash-card">
+                <h3>Campus Announcements</h3>
+                <ul class="announcement-list">
+                    <li>
+                        <span class="ann-date">Oct 10</span>
+                        <div>
+                            <strong>First Semester Registration Open</strong>
+                            <p>Registration for 2025/2026 First Semester is now open. Deadline: Oct 25.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="ann-date">Oct 08</span>
+                        <div>
+                            <strong>Past Questions Updated</strong>
+                            <p>New past questions for CSC, MEE and MTH have been added to the library.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="ann-date">Oct 05</span>
+                        <div>
+                            <strong>Orientation for 100 Level</strong>
+                            <p>Freshers orientation holds on Friday at the Main Auditorium, 10:00 AM.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Upcoming Deadlines -->
+            <section class="dash-card">
+                <h3>Upcoming Deadlines</h3>
+                <ul class="deadline-list">
+                    <li>
+                        <div class="deadline-dot"></div>
+                        <div>
+                            <strong>Course Registration</strong>
+                            <p>Closes Oct 25, 2026</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="deadline-dot warning"></div>
+                        <div>
+                            <strong>School Fees Payment</strong>
+                            <p>Due Nov 15, 2026</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="deadline-dot"></div>
+                        <div>
+                            <strong>First Continuous Assessment</strong>
+                            <p>Starts Nov 20, 2026</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="dash-card">
+                <h3>Recent Activity</h3>
+                <ul class="activity-list" id="activityList">
+                    <li>No recent activity yet. Start by calculating your CGPA or browsing past questions.</li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <h2>Edit Profile</h2>
+            <form id="profileForm" onsubmit="saveProfile(event)">
+                <label>Full Name</label>
+                <input type="text" id="editName" placeholder="e.g. Ada Okafor" required>
+
+                <label>Matric Number</label>
+                <input type="text" id="editMatric" placeholder="e.g. FUTES/CSC/25/001" required>
+
+                <label>Department</label>
+                <select id="editDept">
+                    <option value="Biochemistry">Biochemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Forensic Science">Forensic Science</option>
+                    <option value="Geology">Geology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Microbiology">Microbiology</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Statistics">Statistics</option>
+                    <option value="Animal and Environmental Biology">Animal and Environmental Biology</option>
+                    <option value="Biotechnology">Biotechnology</option>
+                    <option value="Science Laboratory Technology">Science Laboratory Technology</option>
+                    <option value="Environmental Management and Toxicology">Environmental Management and Toxicology</option>
+                    <option value="Agricultural and Biosystems Engineering">Agricultural and Biosystems Engineering</option>
+                    <option value="Biomedical Engineering">Biomedical Engineering</option>
+                    <option value="Mining Engineering">Mining Engineering</option>
+                    <option value="Civil and Environmental Engineering">Civil and Environmental Engineering</option>
+                    <option value="Computer Engineering">Computer Engineering</option>
+                    <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+                    <option value="Architecture">Architecture</option>
+                    <option value="Building Technology">Building Technology</option>
+                    <option value="Estate Management">Estate Management</option>
+                    <option value="Environmental Science and Management">Environmental Science and Management</option>
+                    <option value="Industrial Design">Industrial Design</option>
+                    <option value="Quantity Surveying">Quantity Surveying</option>
+                    <option value="Surveying and Geoinformatics">Surveying and Geoinformatics</option>
+                    <option value="Urban and Regional Planning">Urban and Regional Planning</option>
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Information and Communication Technology">Information and Communication Technology</option>
+
+                </select>
+
+                <label>Level</label>
+                <select id="editLevel">
+                    <option value="100">100 Level</option>
+                    <option value="200">200 Level</option>
+                    <option value="300">300 Level</option>
+                    <option value="400">400 Level</option>
+                    <option value="500">500 Level</option>
+                </select>
+
+                <label>Email</label>
+                <input type="email" id="editEmail" placeholder="e.g. ada@student.futes.edu.ng">
+
+                <label>Current CGPA (optional)</label>
+                <input type="number" id="editCGPA" min="0" max="5" step="0.01" placeholder="e.g. 3.85">
+
+                <label>Total Units so far (optional)</label>
+                <input type="number" id="editUnits" min="0" placeholder="e.g. 42">
+
+                <div class="modal-actions">
+                    <button type="button" class="reset" onclick="closeProfileEdit()">Cancel</button>
+                    <button type="submit" class="calculate">Save Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h3>FutesHub</h3>
+        <p>Your Campus. Your Community. One Platform for FUTES-IYIN.</p>
+        <p class="copyright">© 2026 FutesHub · FUTES-IYIN. All rights reserved.</p>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
